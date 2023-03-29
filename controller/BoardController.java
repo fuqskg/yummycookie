@@ -1,0 +1,66 @@
+package com.cookie.yummy.controller;
+
+import com.cookie.yummy.dto.BoardDTO;
+import com.cookie.yummy.service.BoardService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Controller
+@RequiredArgsConstructor
+@RequestMapping("/yummy") //공통주소를 써주면 이건 안써도 알아서 붙음
+public class BoardController {
+
+    private final BoardService boardService;
+
+
+    //글쓰기 게시판 요청(글쓰기 버튼 클릭)
+    @GetMapping("/save")
+    public String saveForm(){
+
+        return "save";
+    }
+
+    //글작성 요청
+    @PostMapping("/save")
+    public String save(@ModelAttribute BoardDTO boardDTO){
+        System.out.println("boardDTO = " + boardDTO);
+        boardService.save(boardDTO);
+
+        return "redirect:board";
+    }
+
+    //글목록 요청
+    @GetMapping("/board")
+    public String findAll(Model model){
+        //DB에서 전체게시글 데이터를 가져와서
+        //board.html에 보여준다
+
+        //게시글 목록 -> 1개가 아닌 여러개를 가져와야 함
+        //List타입으로 (BoardDTO객체가 담겨있는)
+        List<BoardDTO> boardDTOList = boardService.findAll();
+        model.addAttribute("boardList", boardDTOList);
+
+        return "board";
+    }
+
+    //글 조회
+    @GetMapping("/board/{id}")
+    //경로상에 있는 데이터를 가져올 땐 @PathVariable을 사용
+    //데이터를 담아가야 하기 때문에 모델객체를 사용
+    public String findById(@PathVariable Long id, Model model){
+        /*
+            해당 개시글의 조회수를 하나 올리고
+            게시글 데이터를 가져와서 detail.html에 출력
+         */
+
+        boardService.updateHits(id);
+        BoardDTO boardDTO = boardService.findById(id);
+        model.addAttribute("board", boardDTO);
+        return "detail";
+    }
+
+}
