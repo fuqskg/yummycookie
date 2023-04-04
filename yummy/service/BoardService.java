@@ -4,6 +4,10 @@ import com.cookie.yummy.dto.BoardDTO;
 import com.cookie.yummy.entity.BoardEntity;
 import com.cookie.yummy.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +31,8 @@ public class BoardService {
 
     //이 Repository는 기본적으로 Entity클래스만 받아줌
     private final BoardRepository boardRepository;
+
+    //글쓰기
     public void save(BoardDTO boardDTO) {
         //boardRepository의 save메서드를 호출해야
         //그래야 insert를 db에 할 수 있게 됨
@@ -42,6 +48,7 @@ public class BoardService {
         //dto -> entity (entity클래스에 작성)
     }
 
+    //글목록
     public List<BoardDTO> findAll() {
         //repository에서 뭔가를 가져올 땐 무조건 entity로 옴
         //Entity로 넘어온 List객체를 DTO 객체로 옮겨담아서 컨트롤러로 리턴을 해줘야 함
@@ -85,5 +92,54 @@ public class BoardService {
         } else {
             return null;
         }
+    }
+
+    //글 수정
+    public BoardDTO update(BoardDTO boardDTO) {
+        //entity로 변환
+        BoardEntity boardEntity =  BoardEntity.toUpdateEntity(boardDTO);
+        boardRepository.save(boardEntity);
+
+        //해당 개시글의 상세조회값을 넘겨준다
+        //위에 있는 findById메서드가 이미 Optional작업을 했기때문에
+        //그걸 호출해서 그대로 사용해준다
+        return findById(boardDTO.getId());
+    }
+
+    //글삭제
+    public void delete(Long id) {
+        boardRepository.deleteById(id);
+    }
+
+    //페이징처리
+    public Page<BoardDTO> paging(Pageable pageable) {
+
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = 3; // 한페이지에 볼 게시글 갯수
+
+        //한페이지당 3개의 게시글을 보여주고
+        //정렬은 id를 기준으로 내림차순 정렬
+        //page위치에 있는 값은 0부터 시작함
+        Page<BoardEntity> boardEntities =
+                boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+
+        //Entity가 담긴 Page객체가 어떤 값들을 제공해주는지 확인
+        //자바 프린트문을 이용
+        System.out.println("boardEntities.getContent() = " + boardEntities.getContent()); //요청 페이지에 해당하는 글
+        System.out.println("boardEntities.getTotalElements() = " + boardEntities.getTotalElements()); //전체 글 갯수
+        System.out.println("boardEntities.getContent() = " + boardEntities.getNumber()); //DB로 요청한 페이지 번호
+        System.out.println("boardEntities.getContent() = " + boardEntities.getTotalPages()); //전체 페이지 갯수
+        System.out.println("boardEntities.getContent() = " + boardEntities.getSize()); //한 페이지에 보여지는 글 갯수
+        System.out.println("boardEntities.getContent() = " + boardEntities.hasPrevious()); //이전 페이지 존재여부
+        System.out.println("boardEntities.getContent() = " + boardEntities.isFirst()); //첫 페이지 여부
+        System.out.println("boardEntities.getContent() = " + boardEntities.isLast()); //마지막 페이지 여부
+
+        // 목록: id writer title hits createdTime
+        //dto로 변환완료
+        Page<BoardDTO> boardDTOS = boardEntities.map(board -> new BoardDTO(board.getId(), board.getBoardWriter(), board.getBoardTitle(), board.getBoardHits(), board.getCreatedTime()));
+
+        //컨트롤러쪽으로리턴
+        return boardDTOS;
+
     }
 }
