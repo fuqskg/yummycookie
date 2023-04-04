@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>detail</title>
+    <title>update</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -102,7 +102,7 @@
     <!-- Header End -->
 
 
-    <!-- detail Start -->
+    <!-- update Start -->
     <div class="container-fluid py-5">
         <div class="container py-5">
             <div class="row justify-content-center">
@@ -114,21 +114,38 @@
                 <div class="col-lg-9">
                     <div class="contact-form bg-light rounded p-5">
                         <div id="detail_view"></div>
-                        <!-- detail Form Start -->
+                        <!-- update Form Start -->
+                        <form action="/yummy/board/update" method="post" name="updateForm">
+                            <input type="hidden" name="id" th:value="${boardUpdate.id}">
+                            <div class="form-row">
+                                <div class="col-sm-6 control-group">
+                                    <input class="form-control p-4" name="boardWriter"
+                                           readonly th:value="${boardUpdate.boardWriter}" type="text"/>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="col-sm-6 control-group">
+                                    <input type="text" class="form-control p-4" id="boardPass" name="boardPass" placeholder="비밀번호를 입력하세요"  />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <input type="text" class="form-control p-4" name="boardTitle" th:value="${boardUpdate.boardTitle}" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                <textarea class="form-control p-4" rows="6" name="boardContents" th:value="${boardUpdate.boardContents}" ></textarea>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <input type="hidden" name="boardHits" th:value="${boardUpdate.boardHits}">
+                            <div>
+                                <input class="btn btn-primary btn-block py-3 px-5" onclick="boardUpdate()"
+                                       value="글수정"/>
 
-                        <h2 th:text="${board.boardTitle}"></h2>
-                        작성자: <p th:text="${board.boardWriter}"></p>
-                        작성일: <p th:text="${board.boardCreatedTime}"></p>
-                        조회수: <p th:text="${board.boardHits}"></p>
-                        내용:
-                       <p th:text="${board.boardContents}"></p>
+                            </div>
 
+                        </form>
+                        <!-- update Form End -->
 
-                        <!-- detail Form End -->
-
-                        <button class="btn btn-primary py-md-3 px-md-3 mt-2" onclick="listReq()">목록</button>
-                        <button class="btn btn-primary py-md-3 px-md-3 mt-2" onclick="updateReq()">수정</button>
-                        <button class="btn btn-primary py-md-3 px-md-3 mt-2" onclick="deleteReq()">삭제</button>
 
 
                     </div>
@@ -136,7 +153,7 @@
             </div>
         </div>
     </div>
-    <!-- detail End -->
+    <!-- update End -->
 
 
     <!-- Footer Start -->
@@ -199,21 +216,16 @@
     <script src="/webtemplate/js/main.js"></script>
 </body>
 <script th:inline="javascript">
-    function listReq() {
-        console.log("목록 요청");
-        location.href = "/yummy/paging?page="+[[${page}]];
-    }
-    function updateReq() {
-        console.log("수정 요청");
-        const id = [[${board.id}]];
-        location.href = "/yummy/board/update/" + id;
-    }
-    function deleteReq() {
-        console.log("삭제 요청");
-        const id = [[${board.id}]];
-        location.href = "/yummy/board/delete/" + id;
-    }
+    function boardUpdate() {
+        const pass = [[${boardUpdate.boardPass}]];
+        const inputPass = document.getElementById("boardPass").value;
 
+        if(pass == inputPass){
+            document.updateForm.submit();
+        } else {
+            alert("비밀번호가 일치하지 않습니다.");
+        }
+    }
 
 </script>
 </html>
