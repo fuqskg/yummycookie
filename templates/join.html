@@ -113,7 +113,7 @@
                     <div class="contact-form bg-light rounded p-5">
                         <div id="join_input"></div>
                         <!-- join Form Start -->
-                        <form action="/yummy/join" method="post"  id="joinForm" name="joinform" novalidate="novalidate">
+                        <form novalidate="novalidate">
 
                             <div class="control-group">
                                 <input type="text" class="form-control p-4" id="memberName" name="memberName" placeholder="이름을 입력해주세요" required="required" data-validation-required-message="이름을 입력하세요" />
@@ -160,13 +160,14 @@
 
 
                             <div>
-                                <button class="btn btn-primary btn-block py-3 px-5" type="submit" id="joinFormOk">확인</button>
-                                <button class="btn btn-secondary btn-block py-3 px-5" type="submit" id="joinFormNo">취소</button>
 
 
                             </div>
                         </form>
                         <!-- Join Form End -->
+                        <button class="btn btn-primary btn-block py-3 px-5" id="btn-save">확인</button>
+                        <button class="btn btn-secondary btn-block py-3 px-5" type="submit" id="joinFormNo">취소</button>
+
                     </div>
                 </div>
             </div>
@@ -226,6 +227,9 @@
     <script src="/webtemplate/lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="/webtemplate/lib/isotope/isotope.pkgd.min.js"></script>
     <script src="/webtemplate/lib/lightbox/js/lightbox.min.js"></script>
+
+    <!-- 회원가입js -->
+    <script src="/webtemplate/js/user.js"></script>
 
     <!-- Contact Javascript File -->
     <script src="/webtemplate/mail/jqBootstrapValidation.min.js"></script>
