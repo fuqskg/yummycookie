@@ -24,12 +24,19 @@ public class MemberController {
     }
 
     //회원가입 처리
+    /*
     @PostMapping("/yummy/join")
     public String join(@ModelAttribute MemberDTO memberDTO){
         System.out.println("MemberController.join");
         System.out.println("memberDTO = " +memberDTO);
         memberService.join(memberDTO);
         return "login";
+    }
+
+     */
+    @GetMapping("/yumm/join")
+    public String join(){
+        return "join";
     }
 
     //로그인 페이지 출력 요청
@@ -39,6 +46,7 @@ public class MemberController {
     }
 
     //로그인처리
+
     @PostMapping("/yummy/login")
     public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session){
         MemberDTO loginResult = memberService.login(memberDTO);
@@ -51,6 +59,8 @@ public class MemberController {
             return "login";
         }
     }
+
+
 
 
 }

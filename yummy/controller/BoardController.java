@@ -1,7 +1,9 @@
 package com.cookie.yummy.controller;
 
 import com.cookie.yummy.dto.BoardDTO;
+import com.cookie.yummy.dto.CommentDTO;
 import com.cookie.yummy.service.BoardService;
+import com.cookie.yummy.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.plaf.basic.BasicBorders;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -19,6 +22,7 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
+    private final CommentService commentService;
 
 
     //글쓰기 게시판 요청(글쓰기 버튼 클릭)
@@ -30,7 +34,7 @@ public class BoardController {
 
     //글작성 요청
     @PostMapping("/save")
-    public String save(@ModelAttribute BoardDTO boardDTO){
+    public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
         System.out.println("boardDTO = " + boardDTO);
         boardService.save(boardDTO);
 
@@ -66,6 +70,10 @@ public class BoardController {
 
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
+
+        /* 댓글목록 가져오기 */
+        List<CommentDTO> commentDTOList = commentService.findAll(id);
+        model.addAttribute("commentList", commentDTOList);
         model.addAttribute("board", boardDTO);
         model.addAttribute("page", pageable.getPageNumber());
         return "detail";
@@ -82,8 +90,7 @@ public class BoardController {
 
     }
 
-    //게시글 수정 요청
-    @PostMapping("/board/update")
+    //게시글 수정 요청    @PostMapping("/board/update")
     public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
         BoardDTO board = boardService.update(boardDTO);
         model.addAttribute("board", board);
@@ -107,18 +114,10 @@ public class BoardController {
     public String paging(@PageableDefault(page = 1) Pageable pageable, Model model){
         //pageable.getPageNumber();// 몇 페이지가 요청됐는지 값을 사용할 수 있음
         Page<BoardDTO> boardList = boardService.paging(pageable);
-        int blockLimit = 3;
-        int startPage= (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~
-        int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
+  //      int startPage= (((int)(Math.ceil((double)pageable.getPageNumber() / 10))) - 1) *  10; // 1 4 7 10 ~
+        int startPage= ((int)Math.floor(boardList.getNumber()) / 10) * 10 + 1;
+        int endPage = ((startPage + 9) < boardList.getTotalPages()) ? startPage + 9 : boardList.getTotalPages();
 
-        // page 갯수 20개라면
-        // 현재 사용자가 3page를 보고 있다면
-        // 1 2 3
-        // 현재 사용자가 7page
-        // 7 8 9
-        // 보여지는 페이지 갯수는 3개만 보여줄것임
-        // 총 페이지 개수가 8개
-        // 9 페이지느 ㄴ나오면 안됨
 
         model.addAttribute("boardList", boardList);
         model.addAttribute("startPage", startPage);

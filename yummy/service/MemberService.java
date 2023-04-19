@@ -5,6 +5,7 @@ import com.cookie.yummy.entity.MemberEntity;
 import com.cookie.yummy.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -17,6 +18,7 @@ public class MemberService {
 
 
     //회원가입처리
+    /*
     public void join(MemberDTO memberDTO) {
         //1. dto -> entity 변환작업
         //2. repository의 join메소드 호출
@@ -24,6 +26,20 @@ public class MemberService {
         MemberEntity memberEntity = MemberEntity.toMemberEntity(memberDTO);
         memberRepository.save(memberEntity); //save메소드를 써야함
         //repository의 join메소드 호출(조건. entity객체를 넘기줘야 함)
+
+    }
+
+     */
+    @Transactional
+    public int join(MemberEntity memberEntity){
+        try{
+            memberRepository.save(memberEntity);
+            return 1;
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("MemberService: join() :" + e.getMessage());
+        }
+        return -1;
 
     }
 

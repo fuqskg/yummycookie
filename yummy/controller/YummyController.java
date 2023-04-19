@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class YummyController {
 
     //메인인덱스
-    @GetMapping("/") //http://localhost:8090/ 로 가면 인덱스가 나옴
+    @GetMapping("/yummy") //http://localhost:8090/ 로 가면 인덱스가 나옴
     public String index(){
 
         return "index";
