@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<body>
+<div layout:fragment="content">
+
+    <!-- Login Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <h1 class="section-title position-relative text-center mb-5">로그인</h1>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    <div class="contact-form bg-light rounded p-5">
+                        <div id="join_input"></div>
+                        <!-- Login Form Start -->
+                        <form id="loginForm" name="loginform" novalidate="novalidate">
+                            <div class="control-group">
+                                <input type="text" class="form-control p-4" id="memberEmail" name="memberEmail"
+                                       placeholder="email@naver.com 형식으로 입력해주세요" required="required"
+                                       data-validation-required-message="이메일을 입력하세요"/>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                <input type="password" class="form-control p-4" id="memberPw" name="memberPw"
+                                       placeholder="비밀번호" required="required"
+                                       data-validation-required-message="비밀번호를 입력해주세요"/>
+                                <a href="#" align="center">비밀번호를 잊어버리셨나요?</a>
+                                <p class="help-block text-danger"></p>
+
+                            </div>
+                        </form>
+                        <!-- Login Form End -->
+                        <div>
+                            <button class="btn btn-primary btn-block py-3 px-5" id="btn-login">로그인
+                            </button>
+                        </div>
+
+                        <div style="text-align:center">
+                            <p>회원이 아니신가요? &nbsp;<a href="/yummy/join">회원가입</a></p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login End -->
+</div>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="navFragment">
+    <div class="nav">
+        <div class="container-fluid bg-primary py-3 d-none d-md-block">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-lg-left mb-2 mb-lg-0">
+                        <div class="d-inline-flex align-items-center">
+                            <a class="text-white px-3" href="">NOTICE</a>
+                            <span class="text-white">|</span>
+                            <a class="text-white pl-3" href="/yummy/board">게시판</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-center text-lg-right">
+                        <div class="d-inline-flex align-items-center">
+                            <a class="text-white pr-3" href="/yummy/loginForm">LOGIN</a>
+                            <a class="text-white pr-3" href="/yummy/join">JOIN</a>
+                            <a class="text-white pr-3" href="">CART</a>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Topbar End -->
+
+
+        <!-- Navbar Start -->
+        <div class="container-fluid position-relative nav-bar p-0">
+            <div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
+                <nav class="navbar navbar-expand-lg bg-white navbar-light shadow p-lg-0">
+                    <a href="/yummy" class="navbar-brand d-block d-lg-none">
+                        <h1 class="m-0 display-4 text-primary"><span class="text-secondary">Yummy</span>COOKIE</h1>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse"
+                            data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav ml-auto py-0">
+                            <a href="index.html" class="nav-item nav-link active">BEST</a>
+                            <a href="about.html" class="nav-item nav-link">쿠키세트</a>
+                            <a href="product.html" class="nav-item nav-link">단품쿠키</a>
+                        </div>
+                        <a href="/yummy" class="navbar-brand mx-5 d-none d-lg-block">
+                            <h1 class="m-0 display-4 text-primary"><span class="text-secondary">얌</span>COOKIE</h1>
+                        </a>
+                        <div class="navbar-nav mr-auto py-0">
+                            <a href="service.html" class="nav-item nav-link">포장재료</a>
+                            <a href="gallery.html" class="nav-item nav-link">YUMMY COOKIE?</a>
+                            <a href="contact.html" class="nav-item nav-link">REVIEW</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar End -->
+
+
+        <!-- Header Start -->
+        <!--
+        <div class="jumbotron jumbotron-fluid page-header" style="margin-bottom: 90px;">
+            <div class="container text-center py-5">
+                <h1 class="text-white display-3 mt-lg-5">Contact</h1>
+                <div class="d-inline-flex align-items-center text-white">
+                    <p class="m-0"><a class="text-white" href="">Home</a></p>
+                    <i class="fa fa-circle px-3"></i>
+                    <p class="m-0"></p>
+                </div>
+            </div>
+        </div>
+        -->
+        <!-- Header End -->
+
+
+    </div>
+</div>
+</html>
