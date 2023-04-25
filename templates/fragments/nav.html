@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:fragment="navFragment">
     <div class="nav">
         <div class="container-fluid bg-primary py-3 d-none d-md-block">
@@ -7,15 +8,27 @@
                 <div class="row">
                     <div class="col-md-6 text-center text-lg-left mb-2 mb-lg-0">
                         <div class="d-inline-flex align-items-center">
-                            <a class="text-white px-3" href="">NOTICE</a>
+                            <a class="text-white px-3" href="/yummy/auth/notice">NOTICE</a>
                             <span class="text-white">|</span>
-                            <a class="text-white pl-3" href="/yummy/board">게시판</a>
+                            <a class="text-white pl-3" href="/yummy/auth/board">게시판</a>
                         </div>
                     </div>
                     <div class="col-md-6 text-center text-lg-right">
                         <div class="d-inline-flex align-items-center">
-                            <a class="text-white pr-3" href="/yummy/loginForm">LOGIN</a>
-                            <a class="text-white pr-3" href="/yummy/join">JOIN</a>
+                            <a sec:authorize="!isAuthenticated()" class="text-white pr-3" href="/yummy/auth/loginForm"
+                              >LOGIN</a>
+                            <a sec:authorize="isAuthenticated()" class="text-white pr-3" href="/yummy/logout"
+                            >LOGOUT</a>
+                            <a sec:authorize="!isAuthenticated()" class="text-white pr-3" href="/yummy/auth/joinForm"
+                              >JOIN</a>
+                            <!--
+                            <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post"
+                                  sec:authorize="isAuthenticated()">
+                                <span class="text-white" sec:authentication="name">사용자</span>
+                                <button class="btn btn-secondary my-2 my-sm-0" type="submit">로그아웃</button>
+
+                            </form>
+                            -->
                             <a class="text-white pr-3" href="">CART</a>
 
                         </div>
