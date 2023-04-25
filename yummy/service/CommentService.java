@@ -3,7 +3,6 @@ package com.cookie.yummy.service;
 import com.cookie.yummy.dto.CommentDTO;
 import com.cookie.yummy.entity.BoardEntity;
 import com.cookie.yummy.entity.CommentEntity;
-import com.cookie.yummy.entity.MemberEntity;
 import com.cookie.yummy.repository.BoardRepository;
 import com.cookie.yummy.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;

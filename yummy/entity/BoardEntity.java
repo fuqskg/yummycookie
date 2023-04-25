@@ -4,7 +4,6 @@ import com.cookie.yummy.dto.BoardDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
-import javax.annotation.processing.Generated;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class BoardEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER) //Many: Board, One: User, Eager:무조건들고와야하는값
     @JoinColumn(name = "userId")
-    private MemberEntity memberEntity; //db는 오브젝트를 저장할 수 없음. FK,자바는 오브젝트 저장가능
+    private User user; //db는 오브젝트를 저장할 수 없음. FK,자바는 오브젝트 저장가능
 
     //mappedby: 연관관계의 주인이 아니라는 뜻(FK가 아니니 db에 칼럼을 만들지 않음)
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)

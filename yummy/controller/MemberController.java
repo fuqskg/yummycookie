@@ -1,14 +1,14 @@
 package com.cookie.yummy.controller;
 
-import com.cookie.yummy.dto.MemberDTO;
 import com.cookie.yummy.service.MemberService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+// 인증 안 된 사용자들이 출입할 수 있는 경로: /auth/**
+// 주소가 / 면 메인페이지로 들어가는 것도 허용
+// static이하에 있는 /js/**, /css/**, 이미지 등드 ㅇ허용
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
@@ -17,11 +17,12 @@ public class MemberController {
     private final MemberService memberService;
 
     //회원가입 페이지 출력 요청
-    @GetMapping("/yummy/join")
+    @GetMapping("/yummy/auth/joinForm")
     public String joinForm(){
 
-        return "join";
+        return "joinForm";
     }
+
 
     //회원가입 처리
     /*
@@ -34,19 +35,15 @@ public class MemberController {
     }
 
      */
-    @GetMapping("/yumm/join")
-    public String join(){
-        return "join";
-    }
 
     //로그인 페이지 출력 요청
-    @GetMapping("/yummy/login")
+    @GetMapping("/yummy/auth/loginForm")
     public String loginForm(){
-        return "login";
+        return "loginForm";
     }
 
     //로그인처리
-
+/*
     @PostMapping("/yummy/login")
     public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session){
         MemberDTO loginResult = memberService.login(memberDTO);
@@ -60,6 +57,8 @@ public class MemberController {
         }
     }
 
+
+ */
 
 
 

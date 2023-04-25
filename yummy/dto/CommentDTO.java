@@ -1,7 +1,7 @@
 package com.cookie.yummy.dto;
 
 import com.cookie.yummy.entity.CommentEntity;
-import com.cookie.yummy.entity.MemberEntity;
+import com.cookie.yummy.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,7 +16,7 @@ public class CommentDTO {
     private String commentWriter;
     private String commentContents;
     private Long boardId;
-    private MemberEntity memberEntity;
+    private User user;
     private LocalDateTime commentCreatedTime;
 
     //entity->dto

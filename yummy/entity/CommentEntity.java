@@ -35,7 +35,7 @@ public class CommentEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private MemberEntity memberEntity; //작성자 이름
+    private User user; //작성자 이름
 
     @CreationTimestamp
     private Timestamp createDate;

@@ -110,7 +110,7 @@ public class BoardController {
     }
     //페이징 요청 처리
     ///yummy/board?page=1
-    @GetMapping("/board")
+    @GetMapping("/auth/board")
     public String paging(@PageableDefault(page = 1) Pageable pageable, Model model){
         //pageable.getPageNumber();// 몇 페이지가 요청됐는지 값을 사용할 수 있음
         Page<BoardDTO> boardList = boardService.paging(pageable);

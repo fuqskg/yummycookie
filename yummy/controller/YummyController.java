@@ -14,6 +14,12 @@ public class YummyController {
         return "index";
     }
 
+    //테스트
+    @GetMapping("/test")
+    public String test(){
+        return "test";
+    }
+
 
 
 
