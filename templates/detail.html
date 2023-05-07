@@ -33,9 +33,9 @@
 
                             <div class="info_desc">
                                 <div class="writer_info">
-                                    <strong>작성자 <span th:text="${board.boardWriter}"></span></strong><br/>
-                                    <strong>조회수 <span th:text="${board.boardHits}"></span></strong><br/>
-                                    <strong>작성일 <span th:text="${board.boardCreatedTime}"></span></strong><br/>
+                                    <strong>작성자 </strong><span th:text="${board.boardWriter}"></span><br/>
+                                    <strong>조회수 </strong><span th:text="${board.boardHits}"></span><br/>
+                                    <strong>작성일 </strong><span th:text="${board.boardCreatedTime}"></span><br/>
 
                                 </div>
 
@@ -78,7 +78,7 @@
                         <div class="card" id="comment-write">
                             <div class="card-body"><textarea class="form-control" rows="1"></textarea></div>
                             <div class="card-footer">
-                                <button class="btn btn-outline-dark">등록</button>
+                                <button class="btn btn-outline-dark" onlick="commentWrite()">등록</button>
                             </div>
                         </div>
                         <!-- comment write end -->
@@ -90,7 +90,7 @@
                                 <li id="comment--1" class="list-group-item d-flex justify-content-between">
                                     <div>댓글내용</div>
                                     <div class="d-flex">
-                                        <div class="font-italic">작성자 &nbsp;</div>
+                                        <div class="font-italic" th:value="${boardUpdate.boardWriter}">&nbsp;</div>
                                         <button class="badge badge-secondary">삭제</button>
 
                                     </div>
@@ -109,17 +109,15 @@
         </div>
     </div>
     <!-- detail End -->
+
 </div>
-
-</body>
-
-
 <th:block layout:fragment="script">
-
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script th:inline="javascript">
+
     function listReq() {
         console.log("목록 요청");
-        location.href = "/yummy/paging?page="+[[${page}]];
+        location.href = "/yummy/board?page="+[[${page}]];
     }
     function updateReq() {
         console.log("수정 요청");
@@ -177,12 +175,9 @@
 
 
 
-
-
-
-
-
-
     </script>
 </th:block>
+</body>
+
+
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:fragment="navFragment">
     <div class="nav">
@@ -10,17 +10,30 @@
                         <div class="d-inline-flex align-items-center">
                             <a class="text-white px-3" href="/yummy/auth/notice">NOTICE</a>
                             <span class="text-white">|</span>
-                            <a class="text-white pl-3" href="/yummy/auth/board">게시판</a>
+                            <a class="text-white pl-3" th:href="@{/yummy/board}">게시판</a>
                         </div>
                     </div>
                     <div class="col-md-6 text-center text-lg-right">
                         <div class="d-inline-flex align-items-center">
-                            <a sec:authorize="!isAuthenticated()" class="text-white pr-3" href="/yummy/auth/loginForm"
-                              >LOGIN</a>
-                            <a sec:authorize="isAuthenticated()" class="text-white pr-3" href="/yummy/logout"
-                            >LOGOUT</a>
-                            <a sec:authorize="!isAuthenticated()" class="text-white pr-3" href="/yummy/auth/joinForm"
-                              >JOIN</a>
+
+                            <th:block sec:authorize="isAuthenticated()">
+                                <a sec:authentication="principal.username" class="text-white pr-3"></a>
+                                <a class="text-white pr-3" th:href="@{/user/logout}">LOGOUT</a>
+                            </th:block>
+
+                            <th:block sec:authorize="isAnonymous()">
+                                <a class="text-white pr-3" th:href="@{/user/login}"
+                                >LOGIN</a>
+                                <a class="text-white pr-3" th:href="@{/user/signup}"
+                                >JOIN</a>
+                            </th:block>
+
+                            <a sec:authorize="hasRole('ROLE_ADMIN')" class="text-white pr-3" th:href="@{/user/admin}"
+                            >관리자</a>
+                            <a class="text-white pr-3" href="">CART</a>
+
+
+
                             <!--
                             <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post"
                                   sec:authorize="isAuthenticated()">
@@ -29,7 +42,7 @@
 
                             </form>
                             -->
-                            <a class="text-white pr-3" href="">CART</a>
+
 
                         </div>
 
@@ -44,7 +57,7 @@
         <div class="container-fluid position-relative nav-bar p-0">
             <div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
                 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow p-lg-0">
-                    <a href="/yummy" class="navbar-brand d-block d-lg-none">
+                    <a href="/" class="navbar-brand d-block d-lg-none">
                         <h1 class="m-0 display-4 text-primary"><span class="text-secondary">Yummy</span>COOKIE</h1>
                     </a>
                     <button type="button" class="navbar-toggler" data-toggle="collapse"
@@ -57,7 +70,7 @@
                             <a href="about.html" class="nav-item nav-link">쿠키세트</a>
                             <a href="product.html" class="nav-item nav-link">단품쿠키</a>
                         </div>
-                        <a href="/yummy" class="navbar-brand mx-5 d-none d-lg-block">
+                        <a href="/" class="navbar-brand mx-5 d-none d-lg-block">
                             <h1 class="m-0 display-4 text-primary"><span class="text-secondary">얌</span>COOKIE</h1>
                         </a>
                         <div class="navbar-nav mr-auto py-0">

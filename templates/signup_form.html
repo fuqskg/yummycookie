@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<body>
+<div layout:fragment="content">
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <h1 class="section-title position-relative text-center mb-5">회 원 가 입</h1>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    <div class="contact-form bg-light rounded p-5">
+                        <div id="join_input"></div>
+                        <!-- 회원가입 폼 시작 -->
+                        <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
+
+                            <div class="control-group">
+                                <input type="text" th:field="*{username}" class="form-control p-4"
+                                       placeholder="아이디를 입력해주세요">
+                                <p class="help-block text-danger"></p>
+
+                            </div>
+
+                            <div class="control-group">
+                                <input type="password" th:field="*{password1}" class="form-control p-4"
+                                       placeholder="비밀번호">
+                                <p class="help-block text-danger"></p>
+
+                            </div>
+
+                            <div class="control-group">
+                                <input type="password" th:field="*{password2}" class="form-control p-4"
+                                       placeholder="비밀번호 확인">
+                                <p class="help-block text-danger"></p>
+
+                            </div>
+
+                            <div class="control-group">
+                                <input type="email" th:field="*{email}" class="form-control"
+                                       placeholder="이메일">
+                                <p class="help-block text-danger"></p>
+
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block py-3 px-5">회원가입</button>
+                        </form>
+                        <!-- 회원가입 폼 끝 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
