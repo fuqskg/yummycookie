@@ -20,10 +20,10 @@ public class CommentEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 20, nullable = false)
+    private String commentWriter;
     @Column
     private String commentContents;
-
-
 
     /*
     Board:Comment = 1 : N
@@ -33,15 +33,12 @@ public class CommentEntity extends BaseEntity {
     @JoinColumn(name = "board_id")
     private BoardEntity boardEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user; //작성자 이름
-
     @CreationTimestamp
     private Timestamp createDate;
 
     public static CommentEntity toSaveEntity(CommentDTO commentDTO, BoardEntity boardEntity) {
         CommentEntity commentEntity = new CommentEntity();
+        commentEntity.setCommentWriter(commentDTO.getCommentWriter());
         commentEntity.setCommentContents(commentDTO.getCommentContents());
         commentEntity.setBoardEntity(boardEntity);
         return commentEntity;

@@ -34,4 +34,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private RoleType role; //권한 (Enum을 쓰는 게 좋음)
 
+
+
 }

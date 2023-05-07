@@ -2,14 +2,18 @@ package com.cookie.yummy.controller;
 
 import com.cookie.yummy.dto.BoardDTO;
 import com.cookie.yummy.dto.CommentDTO;
+import com.cookie.yummy.entity.BoardEntity;
 import com.cookie.yummy.service.BoardService;
 import com.cookie.yummy.service.CommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.plaf.basic.BasicBorders;
@@ -90,12 +94,13 @@ public class BoardController {
 
     }
 
-    //게시글 수정 요청    @PostMapping("/board/update")
+    //게시글 수정 요청
+    @PostMapping("/board/update")
     public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
         BoardDTO board = boardService.update(boardDTO);
         model.addAttribute("board", board);
 
-        return "detail";
+        return "board";
         /*
         이렇게 해도 되지만 수정하면 조회수가 올라가는 영향이 있어서...
         return "redirect:board" + boardDTO.getId();
@@ -110,7 +115,7 @@ public class BoardController {
     }
     //페이징 요청 처리
     ///yummy/board?page=1
-    @GetMapping("/auth/board")
+    @GetMapping("/board")
     public String paging(@PageableDefault(page = 1) Pageable pageable, Model model){
         //pageable.getPageNumber();// 몇 페이지가 요청됐는지 값을 사용할 수 있음
         Page<BoardDTO> boardList = boardService.paging(pageable);
@@ -125,6 +130,7 @@ public class BoardController {
 
         return "board";
     }
+
 
 
 

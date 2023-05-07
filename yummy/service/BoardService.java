@@ -41,7 +41,7 @@ public class BoardService {
     //글쓰기
     public void save(BoardDTO boardDTO) throws IOException {
         // 파일 첨부 여부에 따라 로직 분리
-        if(boardDTO.getBoardFile().isEmpty()) {
+        if (boardDTO.getBoardFile().isEmpty()) {
             //첨부파일 없음
             /* 기존 작성했던 코드는 첨부파일 없는 경우에 해당 */
 
@@ -90,7 +90,6 @@ public class BoardService {
         }
 
 
-
         //dto -> entity (entity클래스에 작성)
     }
 
@@ -108,7 +107,7 @@ public class BoardService {
 
         //반복문으로 돌려서 출력
         //boardEntityList에 있는 걸 꺼내올거임
-        for (BoardEntity boardEntity: boardEntityList) {
+        for (BoardEntity boardEntity : boardEntityList) {
             //boardEntity를 DTO로 변환을 하고
             //변환된 객체를 boardDTOList에다가 모두 옮겨 담는 것
             boardDTOList.add(BoardDTO.toBoardDTO(boardEntity));
@@ -127,14 +126,13 @@ public class BoardService {
     }
 
 
-
     //글조회하기
     @Transactional //findById에서 toBoardDTO를 호출하고 있음
     //toBoardDTO안에서 boardEntity(부모)가 boardFileEntity(자식)로 접근하고 있기 때문에
     //이런 경우엔 Transactional을 붙여줘야함
     public BoardDTO findById(Long id) {
         Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
-        if(optionalBoardEntity.isPresent()){
+        if (optionalBoardEntity.isPresent()) {
             //optionalBoardEntity.get();로 자동완성
             BoardEntity boardEntity = optionalBoardEntity.get();
             //BoardDTO.toBoardDTO(boardEntity);로 자동완성
@@ -149,7 +147,7 @@ public class BoardService {
     //글 수정
     public BoardDTO update(BoardDTO boardDTO) {
         //entity로 변환
-        BoardEntity boardEntity =  BoardEntity.toUpdateEntity(boardDTO);
+        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
         boardRepository.save(boardEntity);
 
         //해당 개시글의 상세조회값을 넘겨준다
@@ -175,6 +173,7 @@ public class BoardService {
 
         //Entity가 담긴 Page객체가 어떤 값들을 제공해주는지 확인
         //자바 프린트문을 이용
+        /*
         System.out.println("boardEntities.getContent() = " + boardEntities.getContent()); //요청 페이지에 해당하는 글
         System.out.println("boardEntities.getTotalElements() = " + boardEntities.getTotalElements()); //전체 글 갯수
         System.out.println("boardEntities.getContent() = " + boardEntities.getNumber()); //DB로 요청한 페이지 번호
@@ -184,12 +183,24 @@ public class BoardService {
         System.out.println("boardEntities.getContent() = " + boardEntities.isFirst()); //첫 페이지 여부
         System.out.println("boardEntities.getContent() = " + boardEntities.isLast()); //마지막 페이지 여부
 
+         */
+
         // 목록: id writer title hits createdTime
         //dto로 변환완료
+        /*
         Page<BoardDTO> boardDTOS = boardEntities.map(board -> new BoardDTO(board.getId(), board.getBoardWriter(), board.getBoardTitle(), board.getBoardHits(), board.getCreatedTime()));
 
         //컨트롤러쪽으로리턴
         return boardDTOS;
 
+         */
+        Page<BoardDTO> boardDTOS = boardEntities.map(board -> new BoardDTO(board.getId(), board.getBoardWriter(),
+                board.getBoardTitle(), board.getBoardHits(), board.getCreatedTime()));
+
+        return boardDTOS;
     }
 }
+
+    // 검색
+
+

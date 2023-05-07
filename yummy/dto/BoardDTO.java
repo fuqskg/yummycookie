@@ -2,6 +2,7 @@ package com.cookie.yummy.dto;
 
 import com.cookie.yummy.entity.BoardEntity;
 import com.cookie.yummy.entity.BoardFileEntity;
+import com.cookie.yummy.user.SiteUserDTO;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor //기본생성자
 @AllArgsConstructor //모든 필드를 매개변수로 하는 생성자
+
 public class BoardDTO {
 
     //html name값과 필드값이 동일하다면
@@ -45,6 +47,8 @@ public class BoardDTO {
         this.boardHits = boardHits;
         this.boardCreatedTime = boardCreatedTime;
     }
+
+
 
 
 

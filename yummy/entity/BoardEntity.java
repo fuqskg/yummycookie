@@ -1,6 +1,7 @@
 package com.cookie.yummy.entity;
 
 import com.cookie.yummy.dto.BoardDTO;
+import com.cookie.yummy.user.SiteUser;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,14 +26,20 @@ public class BoardEntity extends BaseEntity {
     private Long id;
 
 
-    @Column // 크기 255, null가능
-    private String boardPass;
+//    @Column // 크기 255, null가능
+//    private String boardPass;
 
     @Column
     private String boardTitle;
 
+    @Column
+    private String boardPass;
+
+
     @Lob//대용량데이터
     private String boardContents;
+    @Column(length = 20, nullable = false) //컬럼의 길이, null가능여부(크기 20, not null)
+    private String boardWriter;
 
     @Column
     private int boardHits;
@@ -40,15 +47,14 @@ public class BoardEntity extends BaseEntity {
     @Column
     private int fileAttached; //1 or 0
 
-    @Column(length = 20, nullable = false) //컬럼의 길이, null가능여부(크기 20, not null)
-    private String boardWriter;
 
-    @ManyToOne(fetch = FetchType.EAGER) //Many: Board, One: User, Eager:무조건들고와야하는값
+
+    @ManyToOne(fetch = FetchType.LAZY) //Many: Board, One: User, Eager:무조건들고와야하는값
     @JoinColumn(name = "userId")
-    private User user; //db는 오브젝트를 저장할 수 없음. FK,자바는 오브젝트 저장가능
+    private SiteUser writer; //db는 오브젝트를 저장할 수 없음. FK,자바는 오브젝트 저장가능
 
     //mappedby: 연관관계의 주인이 아니라는 뜻(FK가 아니니 db에 칼럼을 만들지 않음)
-    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<CommentEntity> commentEntity;
 
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
